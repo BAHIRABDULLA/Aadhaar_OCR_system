@@ -2,9 +2,11 @@ import express from 'express'
 const app = express()
 import ocrRoute from './routes/ocr.routes'
 import cors from 'cors'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const corsOption = {
-    origin:'http://localhost:5173',
+    origin:process.env.CLIENT_BASE_URL,
     credential:true
 }
 app.use(cors(corsOption))
