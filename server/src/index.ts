@@ -8,10 +8,7 @@ const corsOption = {
     credential:true
 }
 app.use(cors(corsOption))
-app.use('/',(req,res,next)=>{
-    console.log(req.url,'req.url');
-    next()    
-})
+
 app.use('/',ocrRoute)
 
 app.listen(3000,()=>console.log('server listening on http://localhost:3000'))

@@ -1,4 +1,3 @@
-import { isDataView } from "util/types";
 
 const aadhaarIdentifiers = [
   'Unique Identification Authority of India',
@@ -30,7 +29,6 @@ export function extractFrontData(text: string) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    console.log(line, 'line  = = = = = =');
 
     // Look for DOB
     if (/Date of Birth|DOB/i.test(line)) {
@@ -38,15 +36,11 @@ export function extractFrontData(text: string) {
       if (match) {
         dob = match[1];
 
-        // Try to grab name from the line before DOB
         if (i > 0) {
           const possibleName = lines[i - 1];
-          console.log(possibleName, 'possible name  +++++++++++++++++');
 
-          // Aadhaar names are usually in all caps
           if (/^[A-Za-z\s\.]{3,}$/.test(possibleName) && !/^(GOV|INDIA|DOB)/i.test(possibleName)) {
             name = possibleName;
-            console.log(possibleName, 'possible name in if condition++++++++++++++++++++++');
 
           }
         }

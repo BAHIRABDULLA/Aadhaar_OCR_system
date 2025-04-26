@@ -78,8 +78,6 @@ export default function AadhaarOCRLandingPage() {
     };
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log('its here bro ');
-
         e.preventDefault();
         e.stopPropagation();
     };
@@ -99,15 +97,12 @@ export default function AadhaarOCRLandingPage() {
                 method: 'POST',
                 body: formData
             })
-            console.log(response, 'response in backend ');
 
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to extract data');
             }
             const result = await response.json()
-            console.log(result, 'result in frontend ');
-
             setExtractedData(result.data)
 
         } catch (error: any) {
