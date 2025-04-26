@@ -93,7 +93,7 @@ export default function AadhaarOCRLandingPage() {
             const formData = new FormData()
             formData.append('front', frontImage)
             formData.append('back', backImage)
-            const response = await fetch('http://localhost:3000/ocr-process', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/ocr-process`, {
                 method: 'POST',
                 body: formData
             })
@@ -127,6 +127,10 @@ export default function AadhaarOCRLandingPage() {
                         <p className="text-gray-600">Upload the front and back sides of your Aadhaar card to extract the information</p>
                     </div>
 
+                    
+                    {/* Instructions */}
+                    <Instructions />
+
                     {/* Upload section */}
                     <div className="grid md:grid-cols-2 gap-6 mb-8">
                         {/* Front side upload */}
@@ -151,7 +155,7 @@ export default function AadhaarOCRLandingPage() {
                                     type="button"
                                     onClick={() => frontInputRef.current?.click()}
                                     // onClick={() => document.getElementById('front-upload').click()}
-                                    className="mt-4 px-4 py-2 border cursor-pointer  text-slate-600 hover:text-white rounded-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                                    className="mt-4 px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 cursor-pointer"
                                 >
                                     Select File
                                 </button>
@@ -190,7 +194,7 @@ export default function AadhaarOCRLandingPage() {
                                 <button
                                     type="button"
                                     onClick={() => backInputRef.current?.click()}
-                                    className="mt-4 px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                                    className="mt-4 px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 cursor-pointer"
                                 >
                                     Select File
                                 </button>
@@ -246,8 +250,7 @@ export default function AadhaarOCRLandingPage() {
                         <ParsedOutput extractedData={extractedData} />
                     )}
 
-                    {/* Instructions */}
-                    <Instructions />
+                    
                 </div>
             </main>
 
