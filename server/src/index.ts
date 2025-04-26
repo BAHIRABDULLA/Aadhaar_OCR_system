@@ -5,11 +5,12 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const corsOption = {
-    origin:process.env.CLIENT_BASE_URL,
-    credential:true
-}
-app.use(cors(corsOption))
+console.log(process.env.CLIENT_BASE_URL,'-- - - ');
+
+app.use(cors({
+    origin: [process.env.CLIENT_BASE_URL!],
+    credentials:true
+}))
 
 app.use('/',ocrRoute)
 
