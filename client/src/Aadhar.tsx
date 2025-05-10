@@ -1,9 +1,10 @@
 import { DragEvent, useRef, useState } from "react";
-import { UploadCloud, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import {  AlertCircle, Loader2 } from "lucide-react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Instructions from "./components/Instructions";
 import ParsedOutput from "./components/ParsedOutput";
+import Upload from "./components/Upload";
 
 export default function AadhaarOCRLandingPage() {
     const [frontImage, setFrontImage] = useState<File | null>(null);
@@ -45,7 +46,7 @@ export default function AadhaarOCRLandingPage() {
         reader.readAsDataURL(file);
     };
 
-    const handleDrop = (side:'front' | 'back', e: DragEvent<HTMLDivElement>) => {
+    const handleDrop = (side: 'front' | 'back', e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -69,7 +70,7 @@ export default function AadhaarOCRLandingPage() {
                         setBackPreview(result);
                     }
                     setError('');
-                }else{
+                } else {
                     setError('Failed to load image preview')
                 }
             };
@@ -127,90 +128,18 @@ export default function AadhaarOCRLandingPage() {
                         <p className="text-gray-600">Upload the front and back sides of your Aadhaar card to extract the information</p>
                     </div>
 
-                    
+
                     {/* Instructions */}
                     <Instructions />
 
                     {/* Upload section */}
                     <div className="grid md:grid-cols-2 gap-6 mb-8">
                         {/* Front side upload */}
-                        <div className="bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-6 flex flex-col items-center justify-center"
-                            onDrop={(e) => handleDrop('front', e)}
-                            onDragOver={handleDragOver}>
-                            <div className="text-center">
-                                <UploadCloud className="mx-auto h-12 w-12 text-slate-500" />
-                                <h3 className="mt-2 text-lg font-medium text-slate-700">Front Side</h3>
-                                <p className="mt-1 text-sm text-gray-500">
-                                    Drag and drop or click to upload
-                                </p>
-                                <input
-                                    type="file"
-                                    ref={frontInputRef}
-                                    id="front-upload"
-                                    className="hidden"
-                                    accept="image/*"
-                                    onChange={(e) => handleFileChange('front', e)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => frontInputRef.current?.click()}
-                                    // onClick={() => document.getElementById('front-upload').click()}
-                                    className="mt-4 px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 cursor-pointer"
-                                >
-                                    Select File
-                                </button>
-                            </div>
-                            {frontPreview && (
-                                <div className="mt-4 w-full">
-                                    <p className="text-sm text-gray-500 mb-2">Preview:</p>
-                                    <div className="relative h-40 bg-gray-200 rounded-md overflow-hidden">
-                                        <img src={frontPreview} alt="Front Preview" className="w-full h-full object-contain" />
-                                        <div className="absolute top-2 right-2">
-                                            <CheckCircle className="h-6 w-6 text-green-500 bg-white rounded-full" />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        <Upload handleDrop={handleDrop} handleDragOver={handleDragOver} handleFileChange={handleFileChange} inputRef={frontInputRef} preview={frontPreview} side='front' />
+
 
                         {/* Back side upload */}
-                        <div className="bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-6 flex flex-col items-center justify-center"
-                            onDrop={(e) => handleDrop('back', e)}
-                            onDragOver={handleDragOver}>
-                            <div className="text-center">
-                                <UploadCloud className="mx-auto h-12 w-12 text-slate-500" />
-                                <h3 className="mt-2 text-lg font-medium text-slate-700">Back Side</h3>
-                                <p className="mt-1 text-sm text-gray-500">
-                                    Drag and drop or click to upload
-                                </p>
-                                <input
-                                    type="file"
-                                    id="back-upload"
-                                    ref={backInputRef}
-                                    className="hidden"
-                                    accept="image/*"
-                                    onChange={(e) => handleFileChange('back', e)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => backInputRef.current?.click()}
-                                    className="mt-4 px-4 py-2 bg-slate-600 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 cursor-pointer"
-                                >
-                                    Select File
-                                </button>
-                            </div>
-                            {backPreview && (
-                                <div className="mt-4 w-full">
-                                    <p className="text-sm text-gray-500 mb-2">Preview:</p>
-                                    <div className="relative h-40 bg-gray-200 rounded-md overflow-hidden">
-                                        <img src={backPreview} alt="Back Preview" className="w-full h-full object-contain" />
-                                        <div className="absolute top-2 right-2">
-                                            <CheckCircle className="h-6 w-6 text-green-500 bg-white rounded-full" />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        <Upload handleDrop={handleDrop} handleDragOver={handleDragOver} handleFileChange={handleFileChange} inputRef={backInputRef} preview={backPreview} side='back' />
                     </div>
 
                     {/* Error message */}
@@ -250,7 +179,6 @@ export default function AadhaarOCRLandingPage() {
                         <ParsedOutput extractedData={extractedData} />
                     )}
 
-                    
                 </div>
             </main>
 
